@@ -8,14 +8,8 @@
       <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
         <div class="text-blue-700">{{ episode.episode }}</div>
         <div class="text-gray-500 text-sm">{{ episode.air_date }}</div>
-        <div
-          v-for="(character, index) in episode.characters.slice(0, 5)"
-          :key="index"
-          class="bg-green-500 text-white text-xs font-medium mr-2 px-2.5 py-0.5 rounded"
-        >
-          {{ character.name }}
-        </div>
       </div>
+      <EpisodeCharacter v-for="(character, index) in episode.characters.slice(0, 5)" :key="index" :character="character" />
     </div>
     <div class="flex items-center gap-x-2">
       <select
@@ -28,6 +22,7 @@
         <option value="Watching">Watching</option>
       </select>
       <button
+        title="click to favorite this episode"
         :disabled="watchStatus !== 'Watched'"
         @click="toggleFavorite"
         class="focus:outline-none mx-3"
@@ -43,6 +38,7 @@
 import { ref } from "vue";
 
 import { useEpisodesStore } from "@/store/episodesStore";
+import EpisodeCharacter from "./EpisodeCharacter.vue";
 
 const { episode } = defineProps({
   episode: Object,
