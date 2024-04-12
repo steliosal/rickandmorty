@@ -2,8 +2,8 @@
   <div class="relative text-lg w-48">
     <button
       class="flex items-center justify-between px-3 py-2 bg-white w-full border border-gray-500 rounded-lg"
-      @click="isOptionsExpanded = !isOptionsExpanded"
-      @blur="isOptionsExpanded = false"
+      @click="toggleOptions"
+      @blur="closeOptions"
     >
       <span>{{ selectedOption }}</span>
       <svg
@@ -29,7 +29,7 @@
           v-for="(option, index) in options"
           :key="index"
           class="px-3 py-2 transition-colors duration-300 hover:bg-gray-200"
-          @mousedown.prevent="setOption(option)"
+          @mousedown.prevent="selectOption(option)"
         >
           {{ option }}
         </li>
@@ -39,18 +39,30 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 
 const props = defineProps({
   options: Array,
 });
 
+const emits = defineEmits(["update"]);
+
 const isOptionsExpanded = ref(false);
 const selectedOption = ref(props.options[0] || "");
 
-function setOption(option) {
+function toggleOptions() {
+  isOptionsExpanded.value = !isOptionsExpanded.value;
+}
+
+function closeOptions() {
+  isOptionsExpanded.value = false;
+}
+
+function selectOption(option) {
   selectedOption.value = option;
   isOptionsExpanded.value = false;
+  emits("update", option);
+  console.log("Selected option:", option);
 }
 </script>
 

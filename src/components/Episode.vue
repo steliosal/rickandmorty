@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ 'bg-gradient-to-r from-purple-400/40 to-white': isFavorite, 'bg-white': !isFavorite }"
+    :class="{ 'bg-gradient-to-r from-blue-400/40 to-white': episode.isFavorite, 'bg-white': !episode.isFavorite }"
     class="flex flex-row items-center justify-between w-3/6 mx-auto shadow-md border border-gray-300 rounded-3xl mb-3 p-4 transition-all ease-in-out duration-500"
   >
     <div class="flex-grow">
@@ -20,7 +20,7 @@
     <div class="flex items-center gap-x-2">
       <select
         v-model="watchStatus"
-        @change="updateWatchStatus"
+        @change="handleStatusChange"
         class="bg-gray-50 border border-gray-300 text-gray-800 py-1 px-2 rounded cursor-pointer text-sm"
       >
         <option value="Watched">Watched</option>
@@ -31,7 +31,7 @@
         :disabled="watchStatus !== 'Watched'"
         @click="toggleFavorite"
         class="focus:outline-none mx-3"
-        :class="{ 'text-gray-400': !isFavorite, 'text-purple-500': isFavorite }"
+        :class="{ 'text-gray-400': !episode.isFavorite, 'text-blue-500': episode.isFavorite }"
       >
         <font-awesome-icon :icon="['fas', 'heart']" size="lg" />
       </button>
@@ -42,19 +42,23 @@
 <script setup>
 import { ref } from "vue";
 
+import { useEpisodesStore } from "@/store/episodesStore";
+
 const { episode } = defineProps({
   episode: Object,
 });
 
-const watchStatus = ref("Unwatched");
-const isFavorite = ref(false);
+const episodesStore = useEpisodesStore();
 
-function toggleFavorite() {
-  isFavorite.value = !isFavorite.value;
-  console.log(`Favorite status for ${episode.name}: ${isFavorite.value ? "Favorited" : "Not Favorited"}`);
+const watchStatus = ref(episode.status);
+
+function handleStatusChange() {
+  episodesStore.updateEpisodeStatus(episode.id, watchStatus.value);
 }
 
-function updateWatchStatus() {
-  console.log("Updated watch status to:", watchStatus.value);
+function toggleFavorite() {
+  if (watchStatus.value === "Watched") {
+    episodesStore.toggleFavorite(episode.id);
+  }
 }
 </script>

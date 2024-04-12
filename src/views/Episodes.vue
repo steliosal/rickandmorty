@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Episode v-for="episode in episodes" :episode="episode" />
+    <Episode v-for="episode in filteredEpisodes" :key="episode.id" :episode="episode" />
     <button
       :disabled="!hasMorePages"
       class="p-4 rounded"
@@ -19,7 +19,7 @@ import { useEpisodesStore } from "@/store/episodesStore";
 import Episode from "@/components/Episode.vue";
 
 const episodesStore = useEpisodesStore();
-const { loading, error, episodes, hasMorePages } = storeToRefs(episodesStore);
+const { loading, error, filteredEpisodes, hasMorePages } = storeToRefs(episodesStore);
 const { fetchNextEpisodes } = episodesStore;
 
 onMounted(() => {
