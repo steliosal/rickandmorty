@@ -21,7 +21,7 @@ import { useEpisodesStore } from "@/store/episodesStore";
 import Episode from "@/components/Episode.vue";
 
 const episodesStore = useEpisodesStore();
-const { loading, error, filteredEpisodes, hasMorePages } = storeToRefs(episodesStore);
+const { filteredEpisodes, hasMorePages } = storeToRefs(episodesStore);
 const { fetchNextEpisodes } = episodesStore;
 
 onMounted(() => {

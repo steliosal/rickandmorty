@@ -25,7 +25,7 @@
         <option value="Watching">Watching</option>
       </select>
       <button
-        title="click to favorite this episode"
+        :title="favoriteButtonTitle"
         :disabled="watchStatus !== 'Watched'"
         @click="toggleFavorite"
         class="focus:outline-none mx-3 text-xs sm:text-sm mt-2 sm:mt-0"
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 import { useEpisodesStore } from "@/store/episodesStore";
 import EpisodeCharacter from "./EpisodeCharacter.vue";
@@ -60,4 +60,8 @@ function toggleFavorite() {
     episodesStore.toggleFavorite(episode.id);
   }
 }
+
+const favoriteButtonTitle = computed(() => {
+  return watchStatus.value === "Watched" ? "Click to favorite this episode." : 'Mark as "Watched" to use the favorite feature.';
+});
 </script>
