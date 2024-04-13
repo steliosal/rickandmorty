@@ -1,19 +1,20 @@
 <template>
-  <div class="relative text-lg w-48">
+  <div class="relative text-lg w-full max-w-xs md:max-w-sm mb-3 md:mb-0">
     <button
-      class="flex items-center justify-between px-3 py-2 bg-white w-full border border-gray-500 rounded-lg"
+      class="flex items-center justify-between px-3 py-0.5 md:py-1 bg-white w-full border border-gray-300 rounded-lg text-gray-800"
       @click="toggleOptions"
       @blur="closeOptions"
     >
       <span>{{ selectedOption }}</span>
+
       <svg
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
         class="h-4 w-4 transform transition-transform duration-200 ease-in-out"
-        :class="isOptionsExpanded ? 'rotate-180' : 'rotate-0'"
+        :class="isOptionsExpanded ? 'rotate-90' : 'rotate-0'"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
     </button>
     <transition
@@ -28,7 +29,7 @@
         <li
           v-for="(option, index) in options"
           :key="index"
-          class="px-3 py-2 transition-colors duration-300 hover:bg-gray-200"
+          class="text-gray-700 cursor-pointer select-none relative py-2 pl-10 pr-4 hover:bg-blue-100"
           @mousedown.prevent="selectOption(option)"
         >
           {{ option }}
