@@ -28,6 +28,10 @@ export const useEpisodesStore = defineStore("episodesStore", () => {
     const episode = episodes.value.find((ep) => ep.id === id);
     if (episode) {
       episode.status = status;
+      // Reset favorite status if the new status is not 'Watched'
+      if (status !== "Watched") {
+        episode.isFavorite = false;
+      }
     }
   };
 
