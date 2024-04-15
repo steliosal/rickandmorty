@@ -1,6 +1,8 @@
 <template>
+  <!-- BaseLoaderBar: Displays a loading indicator bar when data is being fetched -->
   <div v-if="loading" class="w-full">
     <div class="h-1.5 w-full bg-cyan-500 overflow-hidden">
+      <!-- Animated progress bar with a gradient effect -->
       <div class="bg-green-500 h-full animate-progress"></div>
     </div>
   </div>
@@ -8,13 +10,17 @@
 
 <script setup>
 import { computed } from "vue";
-import { useEpisodesStore } from "@/store/episodesStore";
 
+// Access the EpisodesStore
+import { useEpisodesStore } from "@/store/episodesStore";
 const episodesStore = useEpisodesStore();
+
+// Access the 'loading' state from EpisodesStore
 const loading = computed(() => episodesStore.loading);
 </script>
 
-<style>
+<style scoped>
+/* Progress bar animation */
 @keyframes progress {
   0%,
   10% {

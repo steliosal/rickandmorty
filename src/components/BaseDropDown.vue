@@ -1,12 +1,15 @@
 <template>
-  <div class="relative text-lg w-full max-w-xs md:max-w-sm mb-3 md:mb-0">
+  <!-- BaseDropdown: A generic dropdown component for selecting an option from a list -->
+  <div class="relative text-base md:text-lg w-full max-w-xs md:max-w-sm mb-3 md:mb-0">
+    <!-- Dropdown button -->
     <button
       class="flex items-center justify-between px-3 py-0.5 md:py-1 bg-white w-full border border-gray-300 rounded-lg text-gray-800"
       @click="toggleOptions"
       @blur="closeOptions"
     >
+      <!-- Display selected option -->
       <span>{{ selectedOption }}</span>
-
+      <!-- Icon indicating the dropdown status, rotates based on state -->
       <svg
         fill="none"
         viewBox="0 0 24 24"
@@ -17,6 +20,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
     </button>
+    <!-- Dropdown list, shown or hidden based on isOptionsExpanded -->
     <transition
       enter-active-class="transform transition duration-500 ease-custom"
       enter-class="-translate-y-1/2 scale-y-0 opacity-0"
@@ -42,32 +46,37 @@
 <script setup>
 import { ref } from "vue";
 
+// Define props and emits
 const props = defineProps({
   options: Array,
 });
 
 const emits = defineEmits(["update"]);
 
-const isOptionsExpanded = ref(false);
-const selectedOption = ref(props.options[0] || "");
+// Define reactive variables
+const isOptionsExpanded = ref(false); // Tracks if the dropdown is open
+const selectedOption = ref(props.options[0] || ""); // Stores the currently selected option, defaulting to the first option
 
+// Toggles the visibility of the options list
 function toggleOptions() {
   isOptionsExpanded.value = !isOptionsExpanded.value;
 }
 
+// Closes the options list
 function closeOptions() {
   isOptionsExpanded.value = false;
 }
 
+// Selects an option and emits an update event
 function selectOption(option) {
   selectedOption.value = option;
   isOptionsExpanded.value = false;
   emits("update", option);
-  console.log("Selected option:", option);
 }
 </script>
 
-<style>
+<style scoped>
+/* Custom easing function for transitions */
 .ease-custom {
   transition-timing-function: cubic-bezier(0.61, -0.53, 0.43, 1.43);
 }
