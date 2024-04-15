@@ -2,7 +2,7 @@
   <!-- Main container -->
   <div
     :class="{ 'bg-gradient-to-r from-blue-400/40 to-white': episode.isFavorite, 'bg-white': !episode.isFavorite }"
-    class="flex flex-col sm:flex-row items-center justify-between w-full sm:w-[620px] mx-auto shadow-md border border-gray-300 rounded-3xl mb-3 p-4 transition-all ease-in-out duration-500"
+    class="flex flex-col sm:flex-row items-center justify-between w-full sm:w-[650px] mx-auto shadow-md border border-gray-300 rounded-3xl mb-3 p-4 transition-all ease-in-out duration-500"
   >
     <!-- Episode Information -->
     <div class="flex-grow w-full">
